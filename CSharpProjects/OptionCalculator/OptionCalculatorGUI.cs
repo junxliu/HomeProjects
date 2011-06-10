@@ -30,7 +30,7 @@ namespace OptionCalculator
             double volatility       = this.TextBoxVolatility.DoubleValue / 100.0;
             bool isCall             = this.RadioButtonCall.Checked;
             double optionPrice      = BlackScholesCalculator.calculateOptionPrice(currentPrice, strikePrice, yearsToMaturity, interestRate, volatility, isCall);
-            this.TextBoxOptionPrice.Text = Convert.ToString(optionPrice);
+            this.TextBoxOptionPrice.Text = String.Format("{0:F3}", optionPrice);
             calculateGreeks();
         }
 
@@ -80,7 +80,7 @@ namespace OptionCalculator
             bool success = JLNumerics.RootFinder.findRootSecantMethod(priceFunction, ref volatility, 1.0E-10, 50, 0.0);
             if (success)
             {
-                this.TextBoxVolatility.Text = Convert.ToString(volatility * 100.0);
+                this.TextBoxVolatility.Text = String.Format("{0:F3}", volatility * 100.0);
                 calculateGreeks();
             }
             else
