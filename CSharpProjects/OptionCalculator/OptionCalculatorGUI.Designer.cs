@@ -221,6 +221,8 @@
             this.TextBoxOptionPrice.Name = "TextBoxOptionPrice";
             this.TextBoxOptionPrice.Size = new System.Drawing.Size(100, 23);
             this.TextBoxOptionPrice.TabIndex = 3;
+            this.TextBoxOptionPrice.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TextBoxOptionPrice_KeyDown);
+            this.TextBoxOptionPrice.Leave += new System.EventHandler(this.TextBoxOptionPrice_Leave);
             // 
             // TextBoxVolatility
             // 

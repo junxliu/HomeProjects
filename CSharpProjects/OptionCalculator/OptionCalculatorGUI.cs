@@ -33,6 +33,31 @@ namespace OptionCalculator
             this.TextBoxOptionPrice.Text = Convert.ToString(optionPrice);
         }
 
+        private void updateVolatility()
+        {
+            double currentPrice = this.TextBoxStockPrice.DoubleValue;
+            double strikePrice = this.TextBoxStrikePrice.DoubleValue;
+            double interestRate = this.TextBoxInterestRate.DoubleValue / 100.0;
+            DateTime today = this.DateTimePickerToday.Value;
+            DateTime maturityDate = this.DateTimePickerMaturity.Value;
+            TimeSpan span = maturityDate - today;
+            double yearsToMaturity = span.TotalDays / 365.0;
+            bool isCall = this.RadioButtonCall.Checked;
+            double optionPrice = this.TextBoxOptionPrice.DoubleValue;
+
+            double volatility = 0.25;
+            JLNumerics.UnaryFunction priceFunction = (vol) => BlackScholesCalculator.calculateOptionPrice(currentPrice, strikePrice, yearsToMaturity, interestRate, vol, isCall) - optionPrice; 
+            bool success = JLNumerics.RootFinder.findRootSecantMethod(priceFunction, ref volatility, 1.0E-10, 50, 0.0);
+            if (success)
+            {
+                this.TextBoxVolatility.Text = Convert.ToString(volatility * 100.0);
+            }
+            else
+            {
+                MessageBox.Show("Root Finding Failed -- volatility cannot be calculated!");
+            }
+        }
+
 
         private void TextBoxInterestRate_Leave(object sender, EventArgs e)
         {
@@ -171,6 +196,27 @@ namespace OptionCalculator
         private void TextBoxStockPrice_TextChanged_1(object sender, EventArgs e)
         {
 
+        }
+
+        private void TextBoxOptionPrice_Leave(object sender, EventArgs e)
+        {
+            try
+            {
+                double x = this.TextBoxOptionPrice.DoubleValue;
+            }
+            catch (SystemException exception)
+            {
+                MessageBox.Show(this.LabelOptionPrice.Text + ": " + exception.Message);
+                return;
+            }
+
+            updateVolatility();
+        }
+
+        private void TextBoxOptionPrice_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyData == Keys.Return)
+                TextBoxOptionPrice_Leave(sender, e); 
         }
 
     }
