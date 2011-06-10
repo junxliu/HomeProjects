@@ -42,6 +42,8 @@
             this.RadioButtonCall = new System.Windows.Forms.RadioButton();
             this.RadioButtonPut = new System.Windows.Forms.RadioButton();
             this.GroupBoxCalculation = new System.Windows.Forms.GroupBox();
+            this.RichTextBoxGreeks = new System.Windows.Forms.RichTextBox();
+            this.Greeks = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.TextBoxOptionPrice = new NumericTextBox();
             this.TextBoxVolatility = new NumericTextBox();
@@ -192,6 +194,8 @@
             // 
             // GroupBoxCalculation
             // 
+            this.GroupBoxCalculation.Controls.Add(this.RichTextBoxGreeks);
+            this.GroupBoxCalculation.Controls.Add(this.Greeks);
             this.GroupBoxCalculation.Controls.Add(this.label2);
             this.GroupBoxCalculation.Controls.Add(this.TextBoxOptionPrice);
             this.GroupBoxCalculation.Controls.Add(this.TextBoxVolatility);
@@ -200,15 +204,36 @@
             this.GroupBoxCalculation.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.GroupBoxCalculation.Location = new System.Drawing.Point(12, 283);
             this.GroupBoxCalculation.Name = "GroupBoxCalculation";
-            this.GroupBoxCalculation.Size = new System.Drawing.Size(347, 122);
+            this.GroupBoxCalculation.Size = new System.Drawing.Size(347, 227);
             this.GroupBoxCalculation.TabIndex = 13;
             this.GroupBoxCalculation.TabStop = false;
             this.GroupBoxCalculation.Text = "Calculation";
             // 
+            // RichTextBoxGreeks
+            // 
+            this.RichTextBoxGreeks.Enabled = false;
+            this.RichTextBoxGreeks.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.RichTextBoxGreeks.Location = new System.Drawing.Point(166, 121);
+            this.RichTextBoxGreeks.Name = "RichTextBoxGreeks";
+            this.RichTextBoxGreeks.ReadOnly = true;
+            this.RichTextBoxGreeks.Size = new System.Drawing.Size(128, 86);
+            this.RichTextBoxGreeks.TabIndex = 16;
+            this.RichTextBoxGreeks.Text = "";
+            // 
+            // Greeks
+            // 
+            this.Greeks.AutoSize = true;
+            this.Greeks.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.Greeks.Location = new System.Drawing.Point(20, 141);
+            this.Greeks.Name = "Greeks";
+            this.Greeks.Size = new System.Drawing.Size(67, 20);
+            this.Greeks.TabIndex = 15;
+            this.Greeks.Text = "Greeks";
+            // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(305, 37);
+            this.label2.Location = new System.Drawing.Point(273, 37);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(21, 17);
             this.label2.TabIndex = 14;
@@ -217,7 +242,7 @@
             // TextBoxOptionPrice
             // 
             this.TextBoxOptionPrice.AllowNegative = false;
-            this.TextBoxOptionPrice.Location = new System.Drawing.Point(199, 75);
+            this.TextBoxOptionPrice.Location = new System.Drawing.Point(167, 75);
             this.TextBoxOptionPrice.Name = "TextBoxOptionPrice";
             this.TextBoxOptionPrice.Size = new System.Drawing.Size(100, 23);
             this.TextBoxOptionPrice.TabIndex = 3;
@@ -227,7 +252,7 @@
             // TextBoxVolatility
             // 
             this.TextBoxVolatility.AllowNegative = false;
-            this.TextBoxVolatility.Location = new System.Drawing.Point(199, 34);
+            this.TextBoxVolatility.Location = new System.Drawing.Point(167, 34);
             this.TextBoxVolatility.Name = "TextBoxVolatility";
             this.TextBoxVolatility.Size = new System.Drawing.Size(100, 23);
             this.TextBoxVolatility.TabIndex = 2;
@@ -240,7 +265,7 @@
             // 
             this.LabelOptionPrice.AutoSize = true;
             this.LabelOptionPrice.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.LabelOptionPrice.Location = new System.Drawing.Point(22, 78);
+            this.LabelOptionPrice.Location = new System.Drawing.Point(20, 78);
             this.LabelOptionPrice.Name = "LabelOptionPrice";
             this.LabelOptionPrice.Size = new System.Drawing.Size(107, 20);
             this.LabelOptionPrice.TabIndex = 1;
@@ -281,7 +306,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(371, 417);
+            this.ClientSize = new System.Drawing.Size(370, 522);
             this.Controls.Add(this.GroupBoxCalculation);
             this.Controls.Add(this.RadioButtonPut);
             this.Controls.Add(this.RadioButtonCall);
@@ -331,6 +356,8 @@
         private NumericTextBox TextBoxVolatility;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.RichTextBox RichTextBoxGreeks;
+        private System.Windows.Forms.Label Greeks;
     }
 }
 

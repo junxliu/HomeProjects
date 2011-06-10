@@ -31,6 +31,36 @@ namespace OptionCalculator
             bool isCall             = this.RadioButtonCall.Checked;
             double optionPrice      = BlackScholesCalculator.calculateOptionPrice(currentPrice, strikePrice, yearsToMaturity, interestRate, volatility, isCall);
             this.TextBoxOptionPrice.Text = Convert.ToString(optionPrice);
+            calculateGreeks();
+        }
+
+        private void calculateGreeks()
+        {
+            double currentPrice = this.TextBoxStockPrice.DoubleValue;
+            double strikePrice = this.TextBoxStrikePrice.DoubleValue;
+            double interestRate = this.TextBoxInterestRate.DoubleValue / 100.0;
+            DateTime today = this.DateTimePickerToday.Value;
+            DateTime maturityDate = this.DateTimePickerMaturity.Value;
+            TimeSpan span = maturityDate - today;
+            double yearsToMaturity = span.TotalDays / 365.0;
+            double volatility = this.TextBoxVolatility.DoubleValue / 100.0;
+            bool isCall = this.RadioButtonCall.Checked;
+
+            JLNumerics.UnaryFunction deltaFunction = (cp) => BlackScholesCalculator.calculateOptionPrice(cp, strikePrice, yearsToMaturity, interestRate, volatility, isCall);
+            double delta = JLNumerics.DerivativeCalculator.numericalDifferentiation(deltaFunction, currentPrice);
+            JLNumerics.UnaryFunction vegaFunction  = (vol) => BlackScholesCalculator.calculateOptionPrice(currentPrice, strikePrice, yearsToMaturity, interestRate, vol, isCall);
+            double vega = JLNumerics.DerivativeCalculator.numericalDifferentiation(vegaFunction, volatility);
+            JLNumerics.UnaryFunction thetaFunction = (time) => BlackScholesCalculator.calculateOptionPrice(currentPrice, strikePrice, time, interestRate, volatility, isCall);
+            double theta = -JLNumerics.DerivativeCalculator.numericalDifferentiation(thetaFunction, yearsToMaturity);
+            JLNumerics.UnaryFunction rhoFunction = (r) => BlackScholesCalculator.calculateOptionPrice(currentPrice, strikePrice, yearsToMaturity, r, volatility, isCall);
+            double rho = JLNumerics.DerivativeCalculator.numericalDifferentiation(rhoFunction, interestRate);
+
+            this.RichTextBoxGreeks.Text = "Delta = " + String.Format("{0:F3}", delta) + System.Environment.NewLine +
+                                          "Vega  = " + String.Format("{0:F3}", vega) + System.Environment.NewLine +
+                                          "Theta = " + String.Format("{0:F3}", theta) + System.Environment.NewLine +
+                                          "Rho   = " + String.Format("{0:F3}", rho);
+
+        
         }
 
         private void updateVolatility()
@@ -51,12 +81,15 @@ namespace OptionCalculator
             if (success)
             {
                 this.TextBoxVolatility.Text = Convert.ToString(volatility * 100.0);
+                calculateGreeks();
             }
             else
             {
                 MessageBox.Show("Root Finding Failed -- volatility cannot be calculated!");
             }
         }
+
+
 
 
         private void TextBoxInterestRate_Leave(object sender, EventArgs e)
