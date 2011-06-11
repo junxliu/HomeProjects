@@ -20,14 +20,48 @@ namespace OptionCalculator
 
         private void updatePrice()
         {
-            double currentPrice     = this.TextBoxStockPrice.DoubleValue;
-            double strikePrice      = this.TextBoxStrikePrice.DoubleValue;
-            double interestRate     = this.TextBoxInterestRate.DoubleValue / 100.0;
+            double currentPrice, strikePrice, interestRate, volatility;
+            try
+            {
+                currentPrice = this.TextBoxStockPrice.DoubleValue;
+            }
+            catch (SystemException exception)
+            {
+                MessageBox.Show(this.LabelCurrentStockPrice.Text + ": " + exception.Message);
+                return;
+            }
+            try
+            {
+                strikePrice = this.TextBoxStrikePrice.DoubleValue;
+            }
+            catch (SystemException exception)
+            {
+                MessageBox.Show(this.LabelOptionStrikePrice.Text + ": " + exception.Message);
+                return;
+            }
+            try
+            {
+                interestRate = this.TextBoxInterestRate.DoubleValue / 100.0;
+            }
+            catch (SystemException exception)
+            {
+                MessageBox.Show(this.LabelInterestRate.Text + ": " + exception.Message);
+                return;
+            }
+            try
+            {
+                volatility = this.TextBoxVolatility.DoubleValue / 100.0;
+            }
+            catch (SystemException exception)
+            {
+                MessageBox.Show(this.LabelVolatility.Text + ": " + exception.Message);
+                return;
+            }
+
             DateTime today          = this.DateTimePickerToday.Value;
             DateTime maturityDate   = this.DateTimePickerMaturity.Value;
             TimeSpan span           = maturityDate - today;
             double yearsToMaturity  = span.TotalDays / 365.0;
-            double volatility       = this.TextBoxVolatility.DoubleValue / 100.0;
             bool isCall             = this.RadioButtonCall.Checked;
             double optionPrice      = BlackScholesCalculator.calculateOptionPrice(currentPrice, strikePrice, yearsToMaturity, interestRate, volatility, isCall);
             this.TextBoxOptionPrice.Text = String.Format("{0:F3}", optionPrice);
@@ -65,15 +99,50 @@ namespace OptionCalculator
 
         private void updateVolatility()
         {
-            double currentPrice = this.TextBoxStockPrice.DoubleValue;
-            double strikePrice = this.TextBoxStrikePrice.DoubleValue;
-            double interestRate = this.TextBoxInterestRate.DoubleValue / 100.0;
+            double currentPrice, strikePrice, interestRate, optionPrice;
+            try
+            {
+                currentPrice = this.TextBoxStockPrice.DoubleValue;
+            }
+            catch (SystemException exception)
+            {
+                MessageBox.Show(this.LabelCurrentStockPrice.Text + ": " + exception.Message);
+                return;
+            }
+            try
+            {
+                strikePrice = this.TextBoxStrikePrice.DoubleValue;
+            }
+            catch (SystemException exception)
+            {
+                MessageBox.Show(this.LabelOptionStrikePrice.Text + ": " + exception.Message);
+                return;
+            }
+            try
+            {
+                interestRate = this.TextBoxInterestRate.DoubleValue / 100.0;
+            }
+            catch (SystemException exception)
+            {
+                MessageBox.Show(this.LabelInterestRate.Text + ": " + exception.Message);
+                return;
+            }
+            try
+            {
+                optionPrice = this.TextBoxOptionPrice.DoubleValue;
+            }
+            catch (SystemException exception)
+            {
+                MessageBox.Show(this.LabelOptionPrice.Text + ": " + exception.Message);
+                return;
+            }
+
+
             DateTime today = this.DateTimePickerToday.Value;
             DateTime maturityDate = this.DateTimePickerMaturity.Value;
             TimeSpan span = maturityDate - today;
             double yearsToMaturity = span.TotalDays / 365.0;
             bool isCall = this.RadioButtonCall.Checked;
-            double optionPrice = this.TextBoxOptionPrice.DoubleValue;
 
             double volatility = 0.25;
             JLNumerics.UnaryFunction priceFunction = (vol) => BlackScholesCalculator.calculateOptionPrice(currentPrice, strikePrice, yearsToMaturity, interestRate, vol, isCall) - optionPrice; 
@@ -94,16 +163,6 @@ namespace OptionCalculator
 
         private void TextBoxInterestRate_Leave(object sender, EventArgs e)
         {
-            try
-            {
-               double x = this.TextBoxInterestRate.DoubleValue;
-            }
-            catch (SystemException exception)
-            {
-                MessageBox.Show(this.LabelInterestRate.Text + ": " + exception.Message);
-                return;
-            }
-
             updatePrice();
         }
 
@@ -129,31 +188,11 @@ namespace OptionCalculator
 
         private void TextBoxStockPrice_Leave(object sender, EventArgs e)
         {
-            try
-            {
-                double x = this.TextBoxStockPrice.DoubleValue;
-            }
-            catch (SystemException exception)
-            {
-                MessageBox.Show(this.LabelCurrentStockPrice.Text + ": " + exception.Message);
-                return;
-            }
-
             updatePrice();
         }
 
         private void TextBoxStrikePrice_Leave(object sender, EventArgs e)
         {
-            try
-            {
-                double x = this.TextBoxStrikePrice.DoubleValue;
-            }
-            catch (SystemException exception)
-            {
-                MessageBox.Show(this.LabelOptionStrikePrice.Text + ": " + exception.Message);
-                return;
-            }
-
             updatePrice();
         }
 
@@ -195,16 +234,6 @@ namespace OptionCalculator
 
         private void TextBoxVolatility_Leave(object sender, EventArgs e)
         {
-            try
-            {
-                double x = this.TextBoxVolatility.DoubleValue;
-            }
-            catch (SystemException exception)
-            {
-                MessageBox.Show(this.LabelVolatility.Text + ": " + exception.Message);
-                return;
-            }
-
             updatePrice();
         }
 
@@ -233,16 +262,6 @@ namespace OptionCalculator
 
         private void TextBoxOptionPrice_Leave(object sender, EventArgs e)
         {
-            try
-            {
-                double x = this.TextBoxOptionPrice.DoubleValue;
-            }
-            catch (SystemException exception)
-            {
-                MessageBox.Show(this.LabelOptionPrice.Text + ": " + exception.Message);
-                return;
-            }
-
             updateVolatility();
         }
 
