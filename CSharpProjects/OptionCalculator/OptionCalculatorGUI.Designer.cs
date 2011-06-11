@@ -156,7 +156,7 @@
             this.DateTimePickerToday.Name = "DateTimePickerToday";
             this.DateTimePickerToday.Size = new System.Drawing.Size(133, 20);
             this.DateTimePickerToday.TabIndex = 9;
-            this.DateTimePickerToday.Value = new System.DateTime(2011, 6, 10, 0, 0, 0, 0);
+            this.DateTimePickerToday.Value = System.DateTime.Today;
             this.DateTimePickerToday.ValueChanged += new System.EventHandler(this.DateTimePickerToday_ValueChanged);
             // 
             // DateTimePickerMaturity
@@ -165,7 +165,7 @@
             this.DateTimePickerMaturity.Name = "DateTimePickerMaturity";
             this.DateTimePickerMaturity.Size = new System.Drawing.Size(133, 20);
             this.DateTimePickerMaturity.TabIndex = 10;
-            this.DateTimePickerMaturity.Value = new System.DateTime(2012, 6, 10, 0, 0, 0, 0);
+            this.DateTimePickerMaturity.Value = System.DateTime.Today.AddYears(1);
             this.DateTimePickerMaturity.ValueChanged += new System.EventHandler(this.DateTimePickerMaturity_ValueChanged);
             // 
             // RadioButtonCall
